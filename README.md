@@ -31,6 +31,31 @@ Este é um programa Python que simula as operações básicas de um sistema banc
 7. **Sair (`q`)**:
    - Encerra a execução do programa.
 
+## Estrutura do Código
+
+### Classes Principais
+
+- **Transacao (Abstract Base Class)**: Classe base para todas as transações (Depósito e Saque).
+- **Deposito**: Classe para representar a operação de depósito.
+- **Saque**: Classe para representar a operação de saque.
+- **Historico**: Classe para registrar o histórico de transações de uma conta.
+- **Conta**: Classe base para representar uma conta bancária.
+- **ContaCorrente**: Subclasse de `Conta` que adiciona limites para saques.
+- **Cliente (Abstract Base Class)**: Classe base para representar um cliente.
+- **PessoaFisica**: Subclasse de `Cliente` para representar uma pessoa física.
+
+### Funções Principais
+
+- **menu**: Exibe o menu principal e captura a opção escolhida pelo usuário.
+- **exibir_extrato**: Exibe o extrato da conta do usuário.
+- **criar_usuario**: Permite o cadastro de um novo usuário.
+- **filtrar_usuarios**: Filtra e retorna um usuário pelo CPF.
+- **criar_conta**: Permite a criação de uma nova conta para um usuário existente.
+- **lista_contas**: Exibe a lista de todas as contas criadas no sistema.
+- **selecionar_conta**: Permite que o usuário selecione uma conta entre as contas associadas ao seu CPF.
+- **main**: Função principal que controla o fluxo do programa.
+
+
 ## Instruções de Uso
 
 - Ao iniciar o programa, o usuário é apresentado a um menu com as opções disponíveis.
