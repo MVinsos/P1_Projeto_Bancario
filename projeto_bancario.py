@@ -52,14 +52,23 @@ class Conta:
     def nova_conta(cls, cliente, numero, agencia):
         return cls(cliente, numero, agencia)
     
+    @property
     def saldo(self):
         return self._saldo
 
-    def sacar(self, valor):
+    @property
+    def sacar(self):
+        return None
+
+    def realizar_saque(self, valor):
         transacao = Saque(valor)
         return transacao.registrar(self)
     
-    def depositar(self, valor):
+    @property
+    def depositar(self):
+        return None
+
+    def realizar_deposito(self, valor):
         transacao = Deposito(valor)
         return transacao.registrar(self)
 
@@ -70,14 +79,14 @@ class ContaCorrente(Conta):
         self._limite_saques = limite_saques
         self._saques_realizados = 0
 
-    def sacar(self, valor):
+    def realizar_saque(self, valor):
         if self._saques_realizados >= self._limite_saques:
             print("Limite de saques diários excedido.")
             return False
         if valor > self._limite:
             print("Valor de saque excede o limite.")
             return False
-        if super().sacar(valor):
+        if super().realizar_saque(valor):
             self._saques_realizados += 1
             return True
         return False
@@ -125,7 +134,7 @@ def exibir_extrato(conta):
     else:
         for transacao in conta._historico.transacoes:
             print(transacao)
-    print(f"\nSaldo: R$ {conta.saldo():.2f}")
+    print(f"\nSaldo: R$ {conta.saldo:.2f}")
     print("===============================================")
 
 def criar_usuario(usuarios):
@@ -210,19 +219,17 @@ def main():
             if usuario:
                 conta = selecionar_conta(usuario)
                 while True:
-                        try:
-                            valor = float(input("Informe o valor do depósito: "))
-                            if valor <= 0:
-                                print("Valor de depósito inválido. Deve ser maior que 0.")
-                                continue
-                            break
-                        except ValueError:
-                            print("Valor inválido. Por favor, insira um número.")
+                    try:
+                        valor = float(input("Informe o valor do depósito: "))
+                        if valor <= 0:
+                            print("Valor de depósito inválido. Deve ser maior que 0.")
+                            continue
+                        break
+                    except ValueError:
+                        print("Valor inválido. Por favor, insira um número.")
                     
-                if conta.depositar(valor):
-                        print("Depósito realizado com sucesso!")
-                else:
-                    print("Conta não encontrada.")
+                conta.realizar_deposito(valor)
+                print("Depósito realizado com sucesso!")
             else:
                 print("Usuário não encontrado.")
 
@@ -241,8 +248,8 @@ def main():
                     except ValueError:
                         print("Valor inválido. Por favor, insira um número.")
                 
-                if conta.sacar(valor):
-                    print("Saque realizado com sucesso!")
+                conta.realizar_saque(valor)
+                print("Saque realizado com sucesso!")
             else:
                 print("Usuário não encontrado.")
 
